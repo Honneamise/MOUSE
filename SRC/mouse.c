@@ -28,8 +28,8 @@ void GETCHAR(mouse *m)
     if(m->CHPOS>=PROG_SIZE){ ERROR(ERROR_PROG_END); }
     else
     {
-        m->CH = m->PROG[m->CHPOS];
-        m->CHPOS = m->CHPOS++; 
+        m->CH = m->PROG[m->CHPOS++];
+        //m->CHPOS = m->CHPOS++; 
     }
 }
 
@@ -39,8 +39,8 @@ void PUSHCAL(mouse *m, int d)
     if(m->CAL>=STACK_SIZE){ printf("PUSCHAL\n"); ERROR(ERROR_STACK_FULL); }
     else
     {
-        m->CALSTACK[m->CAL] = d;
-        m->CAL = m->CAL++;
+        m->CALSTACK[m->CAL++] = d;
+        //m->CAL = m->CAL++;
     }
 }
 
@@ -220,7 +220,10 @@ void RUN(mouse *m)
 
             case '-':
             {
-                PUSHCAL(m, -POPCAL(m) + POPCAL(m));
+                int b = POPCAL(m);
+                int a = POPCAL(m);
+
+                PUSHCAL(m, a-b);
             }
             break;
 
@@ -232,8 +235,10 @@ void RUN(mouse *m)
 
             case '/':
             {
-                int tmp = POPCAL(m);
-                PUSHCAL(m, POPCAL(m)/tmp);
+                int b = POPCAL(m);
+                int a = POPCAL(m);
+
+                PUSHCAL(m, a/b);
             }
             break;
 
